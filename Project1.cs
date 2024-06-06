@@ -2,35 +2,39 @@
 using System;
 using System.ComponentModel.Design;
 using System.Globalization;
-
-DateTime today = DateTime.Today;
-Console.WriteLine("Please enter year of birth:");
-int year = (int)Single.Parse(Console.ReadLine());
-Console.WriteLine("Please enter month of birth as a number:");
-int month = (int)Single.Parse(Console.ReadLine());
-Console.WriteLine("Please enter day of birth as a number:");
-int day = (int)Single.Parse(Console.ReadLine());
-int age = today.Year - year;
-DateTime dateofbirth = new DateTime(year, month, day);
-if (dateofbirth.Date > today.AddYears(-age))
+namespace HW2Conditionals
 {
-    age--;
-}
-if (dateofbirth.Year > today.Year+150)
-{
-    Console.WriteLine("Invalid Date");
-}
-if (dateofbirth.Year <= today.Year)
-{
-    if (dateofbirth.Month <= today.Month)
+    class HW2Conditionals
     {
-        if (dateofbirth.Day <= today.Day)
+        public static void Main()
         {
+            DateTime today = DateTime.Today;
+            Console.WriteLine("Please enter year of birth:");
+            int year = (int)Single.Parse(Console.ReadLine());
+            Console.WriteLine("Please enter month of birth as a number:");
+            int month = (int)Single.Parse(Console.ReadLine());
+            Console.WriteLine("Please enter day of birth as a number:");
+            int day = (int)Single.Parse(Console.ReadLine());
+            int age = today.Year - year;
+            DateTime dateofbirth = new DateTime(year, month, day);
+            string date = dateofbirth.ToString();
+            if (dateofbirth.Date > today.AddYears(-age))
+            {
+                age--;
+            }
+            if (dateofbirth.Year > today.Year + 150)
+            {
+                Console.WriteLine("Invalid Date");
+            }
             Console.WriteLine("Your age is " + age + ".");
             if (dateofbirth.Day == today.Day && dateofbirth.Month == today.Month)
             {
                 Console.WriteLine("It's your birthday! Happy Birthday!");
 
+            }
+            if (!DateTime.TryParse(date,out today))
+            {
+                Console.WriteLine("Invalid Date");
             }
             if ((dateofbirth.Month == 12 && dateofbirth.Day >= 22) || (dateofbirth.Month == 1 && dateofbirth.Day <= 20))
             {
@@ -138,20 +142,7 @@ if (dateofbirth.Year <= today.Year)
             if (dateofbirth.Year % 12 == 11)
             {
                 Console.WriteLine("Goat");
-
             }
         }
-        else
-        {
-            Console.WriteLine("Invalid Date");
-        }
     }
-    else
-    {
-        Console.WriteLine("Invalid Date");
-    }
-}
-else
-{
-    Console.WriteLine("Invalid Date");
 }
