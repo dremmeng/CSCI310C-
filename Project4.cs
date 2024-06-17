@@ -6,9 +6,8 @@ namespace Project4
 {
     public interface ICustomer
     {
-        string Name { get; set; }
+        string name { get; set; }
     }
-
     public class Order
     {
         public event EventHandler<OrderEventArgs> OrderPlaced;
@@ -16,11 +15,11 @@ namespace Project4
 
         public void PlaceOrder(ICustomer customer)
         {
-            Console.WriteLine($"Order placed for {customer.Name}");
-            OnOrderPlaced(customer);
+            Console.WriteLine($"Order placed for {customer.name}");
+            AOrderPlaced(customer);
         }
 
-        protected virtual void OnOrderPlaced(ICustomer customer)
+        protected virtual void AOrderPlaced(ICustomer customer)
         {
             OrderPlaced?.Invoke(this, new OrderEventArgs { Customer = customer });
         }
@@ -28,10 +27,10 @@ namespace Project4
         public void ShipOrder()
         {
             Console.WriteLine("Order is ready to ship.");
-            OnOrderReadyToShip();
+            AOrderReadyToShip();
         }
 
-        protected virtual void OnOrderReadyToShip()
+        protected virtual void AOrderReadyToShip()
         {
             OrderReadyToShip?.Invoke(this, EventArgs.Empty);
         }
@@ -42,17 +41,17 @@ namespace Project4
     }
     public class Customer : ICustomer
     {
-        public string Name { get; set; }
+        public string name { get; set; }
     }
 
     public class OrderSubscriber
     {
-        public void OrderPlacedHandler(object sender, OrderEventArgs e)
+        public void OrderPlaced(object sender, OrderEventArgs e)
         {
-            Console.WriteLine($"Order placed for " + e.Customer.Name + ".");
+            Console.WriteLine($"Order placed for " + e.Customer.name + ".");
         }
 
-        public void OrderReadyToShipHandler(object sender, EventArgs e)
+        public void OrderReadyToShip(object sender, EventArgs e)
         {
             Console.WriteLine("Order is ready to ship.");
         }
@@ -64,23 +63,23 @@ namespace Project4
         {
             List<Customer> c = new List<Customer>();
             OrderSubscriber s = new OrderSubscriber();
-            Order order = new Order();
-            order.OrderPlaced += s.OrderPlacedHandler;
-            order.OrderReadyToShip += s.OrderReadyToShipHandler;
+            Order o = new Order();
+            o.OrderPlaced += s.OrderPlaced;
+            o.OrderReadyToShip += s.OrderReadyToShip;
             for (int i = 1; i <= 100; i++)
             {
-                c.Add(new Customer { Name = $"Customer " +i});
+                c.Add(new Customer { name = $"Customer " +i});
             }
             foreach (var customer in c)
             {
-                order.PlaceOrder(customer);
+                o.PlaceOrder(customer);
             }
-            order.ShipOrder();
-            var selectedCustomers =c.Where(c => c.Name.Contains("5")).ToList();
+            o.ShipOrder();
+            var selectedCustomers =c.Where(c => c.name.Contains("0")).ToList();
             Console.WriteLine("Selected Customers:");
             foreach (var selectedCustomer in selectedCustomers)
             {
-                Console.WriteLine(selectedCustomer.Name);
+                Console.WriteLine(selectedCustomer.name);
             }
         }
     }
