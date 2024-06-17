@@ -11,7 +11,7 @@ namespace Project4
     public class Order
     {
         public event EventHandler<OrderEventArgs> OrderPlaced;
-        public event EventHandler OrderReadyToShip;
+        public event EventHandler OrderReady;
 
         public void PlaceOrder(ICustomer customer)
         {
@@ -32,7 +32,7 @@ namespace Project4
 
         protected virtual void AOrderReadyToShip()
         {
-            OrderReadyToShip?.Invoke(this, EventArgs.Empty);
+            OrderReady?.Invoke(this, EventArgs.Empty);
         }
     }
     public class OrderEventArgs : EventArgs
@@ -51,7 +51,7 @@ namespace Project4
             Console.WriteLine($"Order placed for " + e.Customer.name + ".");
         }
 
-        public void OrderReadyToShip(object sender, EventArgs e)
+        public void OrderReady(object sender, EventArgs e)
         {
             Console.WriteLine("Order is ready to ship.");
         }
@@ -65,7 +65,7 @@ namespace Project4
             OrderSubscriber s = new OrderSubscriber();
             Order o = new Order();
             o.OrderPlaced += s.OrderPlaced;
-            o.OrderReadyToShip += s.OrderReadyToShip;
+            o.OrderReady += s.OrderReady;
             for (int i = 1; i <= 100; i++)
             {
                 c.Add(new Customer { name = "Customer " + i});
@@ -77,9 +77,9 @@ namespace Project4
             o.ShipOrder();
             var selectedCustomers =c.Where(c => c.name.Contains("0")).ToList();
             Console.WriteLine("Selected Customers:");
-            foreach (var selectedCustomer in selectedCustomers)
+            foreach (var j in selectedCustomers)
             {
-                Console.WriteLine(selectedCustomer.name);
+                Console.WriteLine(j.name);
             }
         }
     }
