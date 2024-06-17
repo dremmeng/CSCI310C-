@@ -68,7 +68,7 @@ namespace Project4
             o.OrderReadyToShip += s.OrderReadyToShip;
             for (int i = 1; i <= 100; i++)
             {
-                c.Add(new Customer { name = $"Customer " +i});
+                c.Add(new Customer { name = "Customer " + i});
             }
             foreach (var customer in c)
             {
